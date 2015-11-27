@@ -1,0 +1,1 @@
+Tcp reassemble is not used in uaflow because of low handling speed!
