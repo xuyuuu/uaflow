@@ -118,7 +118,13 @@ next:
 	if(!item) /*cannot find*/
 	{
 		if(cnt == 10)	
+		{
 			item = old;
+			memset(item, 0x0, FLOW_DDOS_MEMPOOL_EACH_ENTRY_SZ);
+			item->modtime = flow_current_module.get();
+			item->n_packets = 0;
+			item->addrv4 = ipv4_hdr->src_addr;
+		}
 		else
 		{
 			ret = rte_mempool_get(flow_ddos_pool, (void **)&item);
@@ -189,7 +195,13 @@ next:
 	if(!item) /*cannot find*/
 	{
 		if(cnt == 10)	
+		{
 			item = old;
+			memset(item, 0x0, FLOW_DDOS_MEMPOOL_EACH_ENTRY_SZ);
+			item->modtime = flow_current_module.get();
+			item->n_packets = 0;
+			item->addrv4 = ipv4_hdr->src_addr;
+		}
 		else
 		{
 			ret = rte_mempool_get(flow_ddos_pool, (void **)&item);
