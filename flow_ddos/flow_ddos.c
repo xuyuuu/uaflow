@@ -104,7 +104,7 @@ static int flow_ddos_module_v4detect(struct ipv4_hdr *ipv4_hdr,struct tcp_hdr *t
 	list_for_each_entry(item, &(flow_ddos_v4_list[coreid][hash]), head)
 	{
 		if(item->addrv4 == ipv4_hdr->src_addr)
-			break;
+			goto next;
 
 		else if(item->modtime < mtime)
 		{
@@ -114,7 +114,7 @@ static int flow_ddos_module_v4detect(struct ipv4_hdr *ipv4_hdr,struct tcp_hdr *t
 		cnt++;
 	}
 	item = NULL;
-
+next:
 	if(!item) /*cannot find*/
 	{
 		if(cnt == 10)	
@@ -175,7 +175,7 @@ static int flow_ddos_module_v6detect(struct ipv6_hdr *ipv6_hdr,struct tcp_hdr *t
 	list_for_each_entry(item, &this[hash], head)
 	{
 		if(!memcmp(item->addrv6, ipv6_hdr->src_addr, 16))
-			break;
+			goto next;
 
 		else if(item->modtime < mtime)
 		{
@@ -184,7 +184,8 @@ static int flow_ddos_module_v6detect(struct ipv6_hdr *ipv6_hdr,struct tcp_hdr *t
 		}
 		cnt++;
 	}
-	
+	item = NULL;
+next:
 	if(!item) /*cannot find*/
 	{
 		if(cnt == 10)	
