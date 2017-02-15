@@ -200,7 +200,7 @@ next:
 			memset(item, 0x0, FLOW_DDOS_MEMPOOL_EACH_ENTRY_SZ);
 			item->modtime = flow_current_module.get();
 			item->n_packets = 0;
-			item->addrv4 = ipv4_hdr->src_addr;
+			memcpy(item->addrv6, ipv6_hdr->src_addr, 16);
 		}
 		else
 		{
